@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import {
     Card,
@@ -10,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+
 
 const page = () => {
     return (
@@ -48,7 +50,7 @@ const page = () => {
                     </form>
                 </CardContent>
                 <CardFooter className="flex-col gap-2">
-                    <Button type="submit" className="w-full">
+                    <Button type="submit" className="w-full" onClick={()=>{signIn()}}>
                         Login
                     </Button>
 
