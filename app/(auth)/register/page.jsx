@@ -20,6 +20,23 @@ const Register = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+
+    const handlechange = async () => {
+        const res = await fetch('/api/registerUser' , {
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({username , email , password})
+        })
+
+        if(res.ok){
+            redirect('/login')
+        }else{
+            alert("Error registering user")
+        }
+    }
+
     return (
         <Card className=" max-w-sm mx-auto mt-30 ">
             <CardHeader>
@@ -42,18 +59,7 @@ const Register = () => {
                                 onChange={(e) => setUsername(e.target.value)}
                             />
                         </div>
-                        <div className="grid gap-2">
-                            <div className="flex items-center">
-                                <Label htmlFor="password">Password</Label>
-                            </div>
-                            <Input id="password"
-                                type="password"
-                                placeholder='**********'
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)} />
-                        </div>
-                        <div className="grid gap-2">
+                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
                             <Input
                                 id="email"
@@ -64,11 +70,22 @@ const Register = () => {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
+                        <div className="grid gap-2">
+                            <div className="flex items-center">
+                                <Label htmlFor="password">Password</Label>
+                            </div>
+                            <Input id="password"
+                                type="password"
+                                placeholder='**********'
+                                required
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} />
+                        </div>    
                     </div>
                 </form>
             </CardContent>
             <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full" onClick={handlechange}>
                     Login
                 </Button>
                 <Button variant="outline" className="w-full cursor-pointer">
