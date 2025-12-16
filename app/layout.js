@@ -1,16 +1,20 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Inter, Roboto } from "next/font/google";
 import SessionWrapper from "@/components/SessionWrapper";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
 });
+
 
 export const metadata = {
   title: "Create Next App",
@@ -25,7 +29,7 @@ export default function RootLayout({ children }) {
       </head>
       <SessionWrapper>    
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${roboto.variable} antialiased`}
       >
         {children}
       </body>
