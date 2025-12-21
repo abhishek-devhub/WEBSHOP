@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
-    imageUrl:{
+    imageUrl: {
         type: [String],
         required: true
     },
@@ -20,26 +20,24 @@ const productSchema = new mongoose.Schema({
         required: true,
     },
     price: {
-        type: Number,   
+        type: Number,
         required: true,
     },
     sizes: {
         type: [String],
         required: true,
     },
-    colors: {
-        type: [String],
-        required: true,
+    colors:{
+        type:[String],
     },
-    stock: {    
+    stock: {
         type: Number,
         required: true,
+        min: 0
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
-})
+},
+    { timestamps: true }
+)
 
 const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
 export default Product;
