@@ -22,7 +22,7 @@ const Register = () => {
 
 
     const handlechange = async () => {
-        const res = await fetch('/api/registerUser' , {
+        const res = await fetch('/api/registeruser' , {
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
