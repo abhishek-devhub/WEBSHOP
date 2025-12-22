@@ -13,7 +13,7 @@ export async function POST(request) {
         return new Response('Product Saved Successfully', {status:201})
     } catch (error) {
         console.log(error)
-        return new Response(JSON.stringify({message:'ERROR'}, {status:500}))
+        return new Response('Error In Adding Products', {status:500})
     }
 }
 
@@ -21,7 +21,7 @@ export  async function GET(request){
     await connectDB();
     try {
         const products = await Product.find({})
-        return new Response(JSON.stringify({products} , {status: 200}))
+        return new Response(JSON.stringify(products) , {status: 200})
     } catch (error) {
         return new Response(JSON.stringify({message:'Error Getting Products' , status:500}))
     }
