@@ -1,21 +1,16 @@
 import cloudinary from "@/lib/Cloudinary";
 
 export const getMensImages = async () => {
-  const result = await cloudinary.api.resources({
-      type: "upload",
-      resource_type: "image",
-      max_results: 60,
-    });
+  // const result = await cloudinary.api.resources({
+  //     type: "upload",
+  //     resource_type: "image",
+  //   });
 
-    const products = result.resources.map((img, index) => ({
-          id: img.public_id,
-          name:  "Mens T-Shirt",
-          CardDescription: "A stylish men's product.",
-          price: 29.99,
-          image: img.secure_url,
-          Offer: index % 3 === 0 ? "Hot Deal" : null,
-        }));
-    return products;
+      const res = await fetch('http://localhost:3000/api/products' ,{
+        method:'GET'
+      })
+      const data = await res.json()
+    return data;
 }
 
   
