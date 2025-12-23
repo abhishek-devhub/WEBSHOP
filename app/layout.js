@@ -1,7 +1,8 @@
 import "./globals.css";
 import { Inter, Roboto } from "next/font/google";
 import SessionWrapper from "@/components/SessionWrapper";
-
+import Providers from "./redux/reduxprovider";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,13 +28,25 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
       </head>
-      <SessionWrapper>    
-      <body
-        className={`${inter.variable} ${roboto.variable} antialiased`}
-      >
-        {children}
-      </body>
-        </SessionWrapper>
-    </html>
+      <SessionWrapper>
+        <body
+          className={`${inter.variable} ${roboto.variable} antialiased`}
+        >
+          <Providers>
+            <ToastContainer
+              position="top-center"
+              autoClose={2000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              pauseOnHover
+              draggable
+              theme="light"
+            />
+            {children}
+          </Providers>
+        </body>
+      </SessionWrapper>
+    </html >
   );
 }
