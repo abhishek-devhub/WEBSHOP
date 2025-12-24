@@ -1,16 +1,13 @@
 'use client'
 import React from 'react'
-import { Increment , Decrement } from '@/app/redux/addcart/cartslice'
-import { useDispatch } from 'react-redux'
 
-const QuantitySelector = ({item}) => {
-    const dispatch = useDispatch()
+const QuantitySelector = ({ item , onUpdate }) => {
     return (
         <div>
-                <button onClick={()=> dispatch(Decrement(item.id))}>-</button>
-                <span className="px-4">{item.quantity}</span>
-                <button onClick={() => dispatch(Increment(item.id))}>+</button>
-            
+            <button className='cursor-pointer border-r-2 pl-3 pr-3' disabled= {item.quantity <= 1} onClick={() => onUpdate(item._id, item.quantity - 1) }>-</button>
+            <span className="m-3 text-[15px]">{item.quantity}</span>
+            <button className='cursor-pointer border-l-2 pl-3 pr-3' onClick={() => onUpdate(item._id, item.quantity + 1) }>+</button>
+
         </div>
     )
 }

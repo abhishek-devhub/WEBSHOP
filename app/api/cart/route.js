@@ -64,14 +64,13 @@ export async function POST(request) {
 export async function GET(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
-    console.log(session)
     if (!session) {
         return new Response('Unauthorized', { status: 401 })
     }
     const userId = session.user._id
     try {
         let cart = await Cart.findOne({ userId }).populate('items.productId')
-         if (!cart) {
+        if (!cart) {
             cart = {
                 items: [],
                 totalAmount: 0,
@@ -85,7 +84,8 @@ export async function GET(request) {
                     size: item.size,
                     price: item.price,
                     quantity: item.quantity,
-                    imageUrl: [item.image] 
+                    imageUrl: [item.image],
+                    discount:item.discount
                 })),
                 totalAmount: cart.totalAmount,
                 deliveryCharges: cart.deliveryCharges
@@ -99,3 +99,71 @@ export async function GET(request) {
     }
 }
 
+export async function PATCH(request) {
+    await connectDB()
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return new Response('Unauthorized', { status: 401 })
+    }
+    const userId = session.user._id
+    try {
+        const { id, quantity } = await request.json()
+        const cart = await Cart.findOne({ userId })
+        if (!cart) {
+            return new Response('Cart Not Found', { status: 404 })
+        }
+        const item = cart.items.id(id)
+        if (!item) {
+            return new Response('No Item Found', { status: 404 })
+        }
+        item.quantity = quantity
+        cart.totalAmount = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0) + cart.deliveryCharges
+
+        await cart.save()
+
+        const responsebody = {
+            items: cart.items.map(item => ({
+                _id: item._id,
+                name: item.name,
+                size: item.size,
+                price: item.price,
+                quantity: item.quantity,
+                imageUrl: [item.image],
+                discount:item.discount
+            })),
+            totalAmount: cart.totalAmount,
+            deliveryCharges: cart.deliveryCharges
+        }
+        return new Response(JSON.stringify(responsebody) , {status:200})
+    } catch (error) {
+        return new Response('ERROR IN UPDATING' , {status:500})
+    }
+}
+
+export async function DELETE(request) {
+    await connectDB()
+    const session = await getServerSession(authOptions)
+    if (!session) {
+        return new Response('Unauthorized', { status: 401 })
+    }
+    const userId = session.user._id
+    try {
+        const { id } = await request.json()
+        const cart = await Cart.findOne({ userId })
+        if (!cart) {
+            return new Response('Cart Not Found', { status: 404 })
+        }
+        const item = cart.items.id(id)
+        if (!item) {
+            return new Response('No Item Found', { status: 404 })
+        }
+        cart.items = cart.items.filter(item => item._id.toString() !== id)
+        cart.totalAmount = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0) + cart.deliveryCharges
+
+        await cart.save()
+
+        return new Response(JSON.stringify(cart) , {status:200})
+    } catch (error) {
+        return new Response('ERROR IN DELETING THE CART' , {status:500})
+    }
+}
