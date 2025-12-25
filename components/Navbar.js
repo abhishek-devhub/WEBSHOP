@@ -1,12 +1,13 @@
 'use client'
 import React from "react";
 import Link from "next/link";
-import { useSelector } from 'react-redux'
-import { Selectcartcount } from "@/app/redux/addcart/cartslice";
 import Login from "@/app/(auth)/login/page";
+import SearchBox from "./Searchbox";
+import { useContext } from "react";
+import { cartLengthContext } from "@/app/context/context";
 
 const Navbar = () => {
-  const cartCount = useSelector(Selectcartcount)
+  const {cartLength} = useContext(cartLengthContext)
   return (
     <header className="w-full bg-white border-b">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -26,14 +27,12 @@ const Navbar = () => {
 
         <div className="flex items-center gap-6 text-gray-700">
           
-          <Link href="/search" className="hover:text-orange-600 transition text-xl">
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </Link>
+          <SearchBox />
 
           <Link href="/cart" className="hover:text-orange-600 transition text-xl relative">
             <i className="fa-solid fa-cart-shopping"></i>
             <span className="absolute -top-2 -right-3 bg-orange-600 text-white text-xs px-1.5 py-0.5 rounded-full" >
-             {cartCount}
+             {!cartLength ? <div>0</div> : cartLength}
             </span>
           </Link>
 
