@@ -1,13 +1,14 @@
 'use client'
 import React from "react";
 import Link from "next/link";
-import Login from "@/app/(auth)/login/page";
-import SearchBox from "./Searchbox";
 import { useContext } from "react";
 import { cartLengthContext } from "@/app/context/context";
+import { useSession , signOut } from "next-auth/react";
+
 
 const Navbar = () => {
-  const {cartLength} = useContext(cartLengthContext)
+  const { cartLength } = useContext(cartLengthContext)
+  const { data: session, status } = useSession()
   return (
     <header className="w-full bg-white border-b">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -26,22 +27,26 @@ const Navbar = () => {
         </nav>
 
         <div className="flex items-center gap-6 text-gray-700">
-          
-          <SearchBox />
-
+          <Link href='/Search' className="hover:text-orange-600 transition"><i className="fa-solid fa-magnifying-glass text-2xl"></i></Link>
           <Link href="/cart" className="hover:text-orange-600 transition text-xl relative">
             <i className="fa-solid fa-cart-shopping"></i>
             <span className="absolute -top-2 -right-3 bg-orange-600 text-white text-xs px-1.5 py-0.5 rounded-full" >
-             {!cartLength ? <div>0</div> : cartLength}
+              {!cartLength ? <div>0</div> : cartLength}
             </span>
           </Link>
 
-          {!Login && <Link 
-            href="/login" 
+          {!session ? <Link
+            href="/login"
             className="px-4 py-2 rounded-md bg-orange-400 text-white font-medium hover:bg-orange-500 transition"
           >
             Login
-          </Link>}
+          </Link>
+            : <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="ml-2 px-4 py-2 cursor-pointer rounded-md bg-orange-400 text-white font-medium hover:bg-orange-500 transition"
+            >
+              Logout
+            </button>}
         </div>
       </div>
     </header>
