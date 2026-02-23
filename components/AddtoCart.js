@@ -4,17 +4,42 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '@/app/redux/addcart/cartslice'
 import { toast } from 'react-toastify'
+import { useSession } from 'next-auth/react'
+import { useContext } from 'react'
+import { cartLengthContext } from "@/app/context/context";
 
 const AddtoCart = ({ product }) => {
+    const { name, imageUrl, price } = product
+    const quantity = product.quantity || 1
+    const {setCartlength} = useContext(cartLengthContext)
+
     const dispatch = useDispatch()
     const SelectedSize = useSelector(state => state.size.SelectedSize)
+    const { data: session, status } = useSession()
 
-    function handleCart() {
+    async function handleCart() {
         if (!SelectedSize) {
             toast.error('please select the size')
             return
         }
-        dispatch(addItem({ ...product, size: SelectedSize }))
+        if (status !== 'authenticated') {
+            toast.error('Please Login First')
+        }
+        const userId = session.user._id
+        const res = await fetch('/api/cart', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId: userId, productId: product._id, name, image: imageUrl[0], size: SelectedSize, price, quantity})
+        })
+        if (res.ok) {
+            toast('Added To Cart')
+            dispatch(addItem({ ...product, size: SelectedSize }))
+            setCartlength(prev => prev + 1)
+        } else {
+            toast.error("Error")
+        }
     }
     return (
         <div>
@@ -22,7 +47,6 @@ const AddtoCart = ({ product }) => {
                 Add to Cart
             </button>
         </div>
-
     )
 }
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import { cartLengthContext } from "@/app/context/context";
 import { useSession , signOut } from "next-auth/react";
+import SideBar from "./sideBar";
 
 
 const Navbar = () => {
@@ -47,6 +48,9 @@ const Navbar = () => {
             >
               Logout
             </button>}
+            <div className="">
+            <SideBar />
+            </div>
         </div>
       </div>
     </header>

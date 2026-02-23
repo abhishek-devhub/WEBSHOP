@@ -13,8 +13,8 @@ export async function POST(request) {
     try {
         const body = await request.json()
         const { productId, name, image, size, price, quantity } = body
-        const discount = 0
-        const deliveryCharges = 50
+        const discount = (price +250) - price
+        const deliveryCharges = 0
         const totalAmount = quantity * price + deliveryCharges - discount
 
         let cart = await Cart.findOne({ userId })
@@ -129,8 +129,8 @@ export async function PATCH(request) {
                 price: item.price,
                 quantity: item.quantity,
                 imageUrl: [item.image],
-                discount:item.discount
-            })),
+                discount:item.discount   
+                 })),
             totalAmount: cart.totalAmount,
             deliveryCharges: cart.deliveryCharges
         }

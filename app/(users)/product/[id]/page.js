@@ -11,7 +11,7 @@ export default async function ProductPage({ params }) {
   const products = await getMensImages();
   const { id } = await params
 
-  const product = products.find(p => p.id === id)
+  const product = products.find(p => p._id === id)
 
 
   return (
@@ -24,19 +24,19 @@ export default async function ProductPage({ params }) {
 
             <div className="flex flex-col gap-3">
               <div className="border rounded-lg p-1 cursor-pointer">
-                <Image src={product.image} alt={product.name} width={80} height={100} className="object-contain" />
+                <Image src={product.imageUrl[0]} alt={product.name} width={80} height={100} className="object-contain" />
               </div>
               <div className="border rounded-lg p-1 cursor-pointer">
-                <Image src={product.image} alt={product.name} width={80} height={100} className="object-contain" />
+                <Image src={product.imageUrl[0]} alt={product.name} width={80} height={100} className="object-contain" />
               </div>
               <div className="border rounded-lg p-1 cursor-pointer">
-                <Image src={product.image} alt={product.name} width={80} height={100} className="object-contain" />
+                <Image src={product.imageUrl[0]} alt={product.name} width={80} height={100} className="object-contain" />
               </div>
             </div>
 
             <div className="relative bg-gray-100 rounded-xl p-3 flex justify-center items-center">
               <Image
-                src={product.image}
+                src={product.imageUrl[0]}
                 alt={product.name}
                 width={420}
                 height={520}
@@ -50,13 +50,13 @@ export default async function ProductPage({ params }) {
 
           </div>
 
-          <section className="space-y-5">
+          <section className="space-y-4">
 
             <h1 className="text-2xl font-semibold text-gray-900">
               {product.name}
             </h1>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <span className="bg-green-600 text-white px-2 py-1 rounded text-sm font-semibold">
                 4.6 ★
               </span>
@@ -78,8 +78,26 @@ export default async function ProductPage({ params }) {
 
             <div className="space-y-2">
               <p className="font-medium">Size</p>
-              <SizeSelctor />
+              <SizeSelctor product ={product}/>
             </div>
+            {product.colors && product.colors.length > 0 && (
+              <div className="space-y-2">
+                <p className="font-medium">Colors</p>
+                <div className="flex gap-2">
+                  {product.colors.map((color, idx) => (
+                    <span
+                      key={idx}
+                      className="w-6 h-6 rounded-full border"
+                      style={{ backgroundColor: color.toLowerCase() }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <p className={`text-sm font-medium ${product.stock > 0 ? "text-green-600" : "text-red-600"}`}>
+              {product.stock > 0 ? `In Stock: ${product.stock}` : "Out of Stock"}
+            </p>
 
             <div className="space-y-2 text-sm">
               <p className="font-medium">Available offers</p>
@@ -91,7 +109,7 @@ export default async function ProductPage({ params }) {
             </div>
 
             <div className="flex gap-4 pt-4">
-              <AddtoCart product={product} />
+              <AddtoCart product={product}/>
               <button className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-lg font-semibold cursor-pointer">
                 Buy Now
               </button>
@@ -104,4 +122,4 @@ export default async function ProductPage({ params }) {
       <Footer />
     </>
   );
-}
+} 
