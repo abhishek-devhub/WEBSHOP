@@ -1,14 +1,14 @@
 
 import Image from "next/image";
 import Footer from "@/components/Footer";
-import { getMensImages } from "@/components/MensImages";
 import Navbar from "@/components/Navbar";
 import AddtoCart from "@/components/AddtoCart";
 import SizeSelctor from "@/components/SizeSelctor";
+import { getProducts } from "@/lib/getProducts";
 
 export default async function ProductPage({ params }) {
 
-  const products = await getMensImages();
+  const products = await getProducts();
   const { id } = await params
 
   const product = products.find(p => p._id === id)

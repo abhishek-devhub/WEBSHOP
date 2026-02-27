@@ -2,10 +2,10 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import { getMensImages } from "@/components/MensImages";
+import { getProducts } from "@/lib/getProducts";
 
 export default async function Men() {
-  const products = await getMensImages();
+  const products = await getProducts();
 
   return (
     <div>
