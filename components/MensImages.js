@@ -1,6 +1,6 @@
 export const getMensImages = async () => {
-
-      const res = await fetch('http://localhost:3000/api/products' ,{
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL
+      const res = await fetch(`${apiUrl}/api/products` ,{
         method:'GET'
       })
       const data = await res.json()
