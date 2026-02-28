@@ -27,7 +27,8 @@ export default function CartPage() {
     async function fetchCart() {
       try {
         const res = await fetch('/api/cart', {
-          method: 'GET'
+          method: 'GET',
+          credentials: 'include'
         })
         const body = await res.json()
         setData(body)
@@ -43,6 +44,7 @@ export default function CartPage() {
       const res = await fetch("/api/cart", {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', 
         body: JSON.stringify({ id, quantity })
       })
       const updatedCart = await res.json()
@@ -58,6 +60,7 @@ export default function CartPage() {
       const res = await fetch("/api/cart", {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', 
         body: JSON.stringify({ id })
       })
       const DeletedCart = await res.json()

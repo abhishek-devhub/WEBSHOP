@@ -6,6 +6,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
+    // console.log(session)
     if (!session) {
         return new Response('Unauthorized', { status: 401 })
     }
