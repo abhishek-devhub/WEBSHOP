@@ -25,13 +25,12 @@ const AddtoCart = ({ product }) => {
         if (status !== 'authenticated') {
             toast.error('Please Login First')
         }
-        const userId = session.user._id
         const res = await fetch('/api/cart', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ userId: userId, productId: product._id, name, image: imageUrl[0], size: SelectedSize, price, quantity})
+            body: JSON.stringify({productId: product._id, name, image: imageUrl[0], size: SelectedSize, price, quantity})
         })
         if (res.ok) {
             toast('Added To Cart')

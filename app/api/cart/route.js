@@ -6,7 +6,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function POST(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
-    // console.log(session)
+    console.log(session)
     if (!session) {
         return new Response('Unauthorized', { status: 401 })
     }
@@ -37,7 +37,7 @@ export async function POST(request) {
                 totalAmount
             })
         } else {
-            const existingItemIndex = cart.items.findIndex(item => item.productId.toString() === productId)
+            const existingItemIndex = cart.items.findIndex(item => item.productId.toString() === productId.toString())
             if (existingItemIndex !== -1) {
                 cart.items[existingItemIndex].quantity += quantity
             } else {
@@ -58,15 +58,15 @@ export async function POST(request) {
 
     } catch (error) {
         console.log(error)
-        return new Response(JSON.stringify({error : 'Error fetching Cart details' }), { status: 500 })
-        }
+        return new Response('Cart access failed!', { status: 500 })
+    }
 }
 
 export async function GET(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
     if (!session) {
-        return new Response(JSON.stringify({error : 'Unauthorized'}) , { status: 401 })
+        return new Response('Unauthorized', { status: 401 })
     }
     const userId = session.user._id
     try {
@@ -95,7 +95,8 @@ export async function GET(request) {
 
         return new Response(JSON.stringify(cart), { status: 200 })
     } catch (error) {
-        return new Response(JSON.stringify({error : 'Error fetching Cart details' }), { status: 500 })
+        return new Response("Error fetching cartDetails", { status: 500 });
+
     }
 }
 
@@ -103,7 +104,7 @@ export async function PATCH(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
     if (!session) {
-        return new Response(JSON.stringify({error : 'Unauthorized'}) , { status: 401 })
+        return new Response('Unauthorized', { status: 401 })
     }
     const userId = session.user._id
     try {
@@ -144,7 +145,7 @@ export async function DELETE(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
     if (!session) {
-        return new Response(JSON.stringify({error : 'Unauthorized'}) , { status: 401 })
+        return new Response('Unauthorized', { status: 401 })
     }
     const userId = session.user._id
     try {

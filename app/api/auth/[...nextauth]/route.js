@@ -37,6 +37,7 @@ export const authOptions = ({
         async jwt({ token, user }) {
             await connectDB();
             if (user) {
+                await connectDB();
                 let dbUser = await User.findOne({ email: user.email });
                 if (!dbUser) {
                     dbUser = await User.create({
