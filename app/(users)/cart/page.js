@@ -22,6 +22,7 @@ export default function CartPage() {
   const totalOriginal = data.items.reduce((acc, item) => acc + (item.price + 250) * item.quantity, 0);
   const totalDiscount = totalOriginal - totalPrice;
   const totalAmount = totalPrice + data.deliveryCharges
+  
 
   useEffect(() => {
     async function fetchCart() {

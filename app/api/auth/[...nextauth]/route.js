@@ -35,7 +35,6 @@ export const authOptions = ({
     },
     callbacks: {
         async jwt({ token, user }) {
-            await connectDB();
             if (user) {
                 await connectDB();
                 let dbUser = await User.findOne({ email: user.email });
@@ -51,12 +50,12 @@ export const authOptions = ({
             }
             return token
     },
-    async session({ session, user, token }) {
-        session.user = {
-            _id: token._id,
-            email: token.email,
-            name: token.name,
-        };
+    async session({ session, token }) {
+        if (session.user){
+            session.user._id = token._id;
+            session.user.email = token.email;
+            session.user.name = token.name;
+        }
         return session;
     },
 },
