@@ -81,7 +81,7 @@ export async function GET(request) {
             cart = {
                 items: cart.items.map(item => ({
                     _id: item._id,
-                    name: item.productId.name,
+                    name: item.productId?.name || item.name,
                     size: item.size,
                     price: item.price,
                     quantity: item.quantity,
