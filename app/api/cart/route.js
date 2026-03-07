@@ -58,15 +58,15 @@ export async function POST(request) {
 
     } catch (error) {
         console.log(error)
-        return new Response('Cart access failed!', { status: 500 })
-    }
+        return new Response(JSON.stringify({error : 'Error fetching Cart details' }), { status: 500 })
+        }
 }
 
 export async function GET(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
     if (!session) {
-        return new Response('Unauthorized', { status: 401 })
+        return new Response(JSON.stringify({error : 'Unauthorized'}) , { status: 401 })
     }
     const userId = session.user._id
     try {
@@ -95,8 +95,7 @@ export async function GET(request) {
 
         return new Response(JSON.stringify(cart), { status: 200 })
     } catch (error) {
-        return new Response("Error fetching cartDetails", { status: 500 });
-
+        return new Response(JSON.stringify({error : 'Error fetching Cart details' }), { status: 500 })
     }
 }
 
@@ -104,7 +103,7 @@ export async function PATCH(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
     if (!session) {
-        return new Response('Unauthorized', { status: 401 })
+        return new Response(JSON.stringify({error : 'Unauthorized'}) , { status: 401 })
     }
     const userId = session.user._id
     try {
@@ -145,7 +144,7 @@ export async function DELETE(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
     if (!session) {
-        return new Response('Unauthorized', { status: 401 })
+        return new Response(JSON.stringify({error : 'Unauthorized'}) , { status: 401 })
     }
     const userId = session.user._id
     try {
