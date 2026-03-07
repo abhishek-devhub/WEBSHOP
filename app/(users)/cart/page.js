@@ -104,6 +104,7 @@ export default function CartPage() {
       <Navbar />
       <Script
         src='https://checkout.razorpay.com/v1/checkout.js'
+        strategy="lazyOnload"
       ></Script>
       {data.items.length > 0 ? <main className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -188,7 +189,7 @@ export default function CartPage() {
         <p className="text-gray-500 mb-6">
           Looks like you haven’t added anything to your cart yet.
         </p>
-        <Link href="/products" className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold">
+        <Link href="/" className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold">
           Continue Shopping
         </Link>
       </div>}
