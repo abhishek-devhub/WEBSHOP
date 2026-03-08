@@ -65,36 +65,35 @@ export async function POST(request) {
 export async function GET(request) {
     await connectDB()
     const session = await getServerSession(authOptions)
-    if (!session) {
+    if (!session?.user?._id) {
         return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 })
     }
     const userId = session.user._id
     try {
-        let cart = await Cart.findOne({ userId }).populate('items.productId')
+        let cart = await Cart.findOne({ userId })
         if (!cart) {
-            cart = {
+            return new Response(JSON.stringify({
                 items: [],
                 totalAmount: 0,
                 deliveryCharges: 0
-            };
-        } else {
-            cart = {
-                items: cart.items.map(item => ({
-                    _id: item._id,
-                    name: item.productId?.name || item.name,
-                    size: item.size,
-                    price: item.price,
-                    quantity: item.quantity,
-                    imageUrl: [item.image],
-                    discount: item.discount
-                })),
-                totalAmount: cart.totalAmount,
-                deliveryCharges: cart.deliveryCharges
-            };
+            }), { status: 200 })
         }
-
-        return new Response(JSON.stringify(cart), { status: 200 })
+        const cartresponse = {
+            items: cart.items.map(item => ({
+                _id: item._id,
+                name: item.name,
+                size: item.size,
+                price: item.price,
+                quantity: item.quantity,
+                imageUrl: [item.image],
+                discount: item.discount
+            })),
+            totalAmount: cart.totalAmount,
+            deliveryCharges: cart.deliveryCharges
+        }
+        return new Response(JSON.stringify(cartresponse), { status: 200 })
     } catch (error) {
+        console.log('Cart Get Error', error)
         return new Response(JSON.stringify({ error: 'Error Fetching CartDetails' }), { status: 500 })
     }
 }
@@ -117,7 +116,7 @@ export async function PATCH(request) {
             return new Response(JSON.stringify({ error: 'No Item Found' }), { status: 404 })
         }
         item.quantity = quantity
-        cart.totalAmount = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0) + cart.deliveryCharges
+        cart.totalAmount = cart.items.reduce((acc, item) => acc + item.price * item.quantity - item.discount, 0) + cart.deliveryCharges
 
         await cart.save()
 
@@ -159,11 +158,23 @@ export async function DELETE(request) {
 
         }
         cart.items = cart.items.filter(item => item._id.toString() !== id)
-        cart.totalAmount = cart.items.reduce((acc, item) => acc + item.price * item.quantity, 0) + cart.deliveryCharges
+        cart.totalAmount = cart.items.reduce((acc, item) => acc + item.price * item.quantity - item.discount, 0) + cart.deliveryCharges
 
         await cart.save()
-
-        return new Response(JSON.stringify(cart), { status: 200 })
+        const responsebody = {
+            items: cart.items.map(item => ({
+                _id: item._id,
+                name: item.name,
+                size: item.size,
+                price: item.price,
+                quantity: item.quantity,
+                imageUrl: [item.image],
+                discount: item.discount
+            })),
+            totalAmount: cart.totalAmount,
+            deliveryCharges: cart.deliveryCharges
+        }
+        return new Response(JSON.stringify(responsebody), { status: 200 })
     } catch (error) {
         return new Response(JSON.stringify({ error: 'Error in Deleting Cart' }), { status: 500 })
     }

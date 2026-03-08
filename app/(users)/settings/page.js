@@ -1,0 +1,11 @@
+import React from 'react'
+
+const page = () => {
+  return (
+    <div>
+      <h1 className=" font-serif text-center text-4xl mt-70 text-gray-700 ">Settings Page</h1>
+    </div>
+  )
+}
+
+export default page
