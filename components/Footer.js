@@ -9,7 +9,7 @@ export default function Footer() {
         <div>
           <h2 className="text-white text-2xl font-semibold mb-4">Wolfstore</h2>
           <p className="text-gray-400 leading-relaxed">
-            Premium shoes, crafted for comfort & performance.  
+            Premium shoes, crafted for comfort & performance.
             Experience style that moves with you.
           </p>
         </div>
@@ -27,11 +27,11 @@ export default function Footer() {
         <div>
           <h3 className="text-white text-lg font-medium mb-4">Customer Support</h3>
           <ul className="space-y-2">
-            <li><Link href="/contact" className="hover:text-white transition">Contact Us</Link></li>
-            <li><Link href="/faq" className="hover:text-white transition">FAQ</Link></li>
-            <li><Link href="/shipping" className="hover:text-white transition">Shipping Info</Link></li>
-            <li><Link href="/returns" className="hover:text-white transition">Returns & Refunds</Link></li>
-            <li><Link href="/privacy" className="hover:text-white transition">Privacy Policy</Link></li>
+            <li><Link href="/" className="hover:text-white transition">Contact Us</Link></li>
+            <li><Link href="/" className="hover:text-white transition">FAQ</Link></li>
+            <li><Link href="/" className="hover:text-white transition">Shipping Info</Link></li>
+            <li><Link href="/" className="hover:text-white transition">Returns & Refunds</Link></li>
+            <li><Link href="/" className="hover:text-white transition">Privacy Policy</Link></li>
           </ul>
         </div>
 

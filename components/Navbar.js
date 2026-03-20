@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { useContext } from "react";
 import { cartLengthContext } from "@/app/context/context";
-import { useSession , signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import SideBar from "./sideBar";
 
 
@@ -48,9 +48,9 @@ const Navbar = () => {
             >
               Logout
             </button>}
-            <div className="">
+          <div className="">
             <SideBar />
-            </div>
+          </div>
         </div>
       </div>
     </header>

@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import Link from "next/link";
 import { getProducts } from "@/lib/getProducts";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60
 
 export default async function Men() {
   const products = await getProducts();
