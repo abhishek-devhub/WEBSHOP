@@ -15,7 +15,7 @@ export default async function Men() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <h1 className="text-4xl font-bold text-center mb-10">Men&apos;s Collection</h1>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {products.map(product => (
             <Link
               key={product._id}
@@ -28,7 +28,7 @@ export default async function Men() {
                   alt={product.name}
                   width={400}
                   height={300}
-                  className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-40 sm:h-48 md:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 {product.price < 1000 && (
                   <span className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">

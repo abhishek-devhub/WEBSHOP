@@ -125,7 +125,7 @@ export default function CartPage() {
               <div className="flex-1 space-y-2">
                 <h3 className="font-medium line-clamp-2">{item.name}</h3>
                 <p className="text-sm text-gray-500">Size: {item.size}</p>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   <span className="text-lg font-semibold">${Number(item.price * item.quantity).toFixed(2)}</span>
                   <span className="line-through text-gray-400"> ${(item.price + 250).toFixed(2)}</span>
                   <span className="text-green-600 font-semibold">{(() => {
@@ -142,8 +142,8 @@ export default function CartPage() {
                   })()}
                   </span>
                 </div>
-                <div className="flex items-center gap-4 pt-2">
-                  <div className="flex items-center border-2 rounded-md overflow-hidden">
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <div className="flex items-center border-2 rounded-md overflow-hidden min-w-[100px]">
                     <QuantitySelector item={item} onUpdate={updateQuantity} />
                   </div>
                   <span className="text-sm text-red-600 font-medium cursor-pointer" onClick={() => DeleteCart(item._id)}>Remove</span>

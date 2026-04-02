@@ -4,8 +4,8 @@ import Link from "next/link"
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-gray-300 py-14 px-6 md:px-12 mt-20">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+    <footer className="bg-black text-gray-300 py-12 md:py-14 px-6 md:px-12 mt-20">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <h2 className="text-white text-2xl font-semibold mb-4">Wolfstore</h2>
           <p className="text-gray-400 leading-relaxed">

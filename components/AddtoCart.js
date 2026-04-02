@@ -41,8 +41,8 @@ const AddtoCart = ({ product }) => {
         }
     }
     return (
-        <div>
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold cursor-pointer" onClick={() => handleCart()}>
+        <div className="w-full">
+            <button className="w-full bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold cursor-pointer" onClick={() => handleCart()}>
                 Add to Cart
             </button>
         </div>

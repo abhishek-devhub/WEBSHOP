@@ -20,9 +20,9 @@ export default async function ProductPage({ params }) {
       <main className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-          <div className="flex gap-4">
+          <div className="flex flex-col-reverse md:flex-row gap-4">
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-row md:flex-col gap-3 justify-center md:justify-start mt-2 md:mt-0">
               <div className="border rounded-lg p-1 cursor-pointer">
                 <Image src={product.imageUrl[0]} alt={product.name} width={80} height={100} className="object-contain" />
               </div>
@@ -108,9 +108,9 @@ export default async function ProductPage({ params }) {
               </ul>
             </div>
 
-            <div className="flex gap-4 pt-4">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <AddtoCart product={product}/>
-              <button className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-lg font-semibold cursor-pointer">
+              <button className="w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-lg font-semibold cursor-pointer">
                 Buy Now
               </button>
             </div>
