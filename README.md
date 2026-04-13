@@ -1,3 +1,5 @@
+![WolfStore Banner](./public/banner.png)
+
 # 🛍️ Modern E-Commerce Platform
 
 A feature-rich, high-performance e-commerce platform built with the latest **Next.js 16**, **React 19**, and **Tailwind CSS 4**. This project offers a seamless shopping experience with secure authentication, real-time cart updates, integrated payments, and a powerful admin dashboard.
@@ -84,11 +86,6 @@ Open [http://localhost:3000](http://localhost:3000) to view the application.
 ├── redux/             # Redux slices and store configuration
 └── styles/            # Global styling
 ```
-
----
-
-## 📸 Screenshots & Demo
-*(Tip: Add your high-quality screenshots here to showcase the stunning UI!)*
 
 ---
 
